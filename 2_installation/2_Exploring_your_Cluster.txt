@@ -32,3 +32,60 @@ mwubuntu1    127.0.1.1            8           4 0.00 d         *      New Goblin
 在这里,我们可以看到一个名为“新妖精”的节点,这是单一节点当前在我们的集群。
 
 
+
+#########################
+列出所有索引: List All Indexes
+
+现在,让我们看一眼我们的索引:
+curl 'localhost:9200/_cat/indices?v'
+
+和响应:
+curl 'localhost:9200/_cat/indices?v'
+health index pri rep docs.count docs.deleted store.size pri.store.size
+
+这仅仅意味着我们还没有索引集群中。
+
+##########################
+创建一个索引：Create an Index
+现在让我们创建一个索引命名为“客户”然后再列出所有索引:
+
+curl -XPUT 'localhost:9200/customer?pretty'
+curl 'localhost:9200/_cat/indices?v'
+
+第一个命令创建索引命名为“客户”使用动词。我们只是添加漂亮的末尾调用告诉它形式打印JSON响应(如果有的话)。
+
+和响应：
+
+curl -XPUT 'localhost:9200/customer?pretty'
+{
+  "acknowledged" : true
+}
+
+curl 'localhost:9200/_cat/indices?v'
+health index    pri rep docs.count docs.deleted store.size pri.store.size
+yellow customer   5   1          0            0       495b           495b
+
+第二个命令的结果告诉我们,我们现在有1指数命名客户有5个主碎片和1副本(默认值),它包含0文件。
+
+
+您可能还注意到客户指数有一个黄色的健康标记。回忆,黄色意味着我们之前所讨论的一些副本不分配(还)。这个指数发生这种情况的原因是Elasticsearch默认创建一个复制指数。因为我们只有一个节点运行,一个副本还不能分配(高可用性),直到晚些时候当另一个节点加入集群。一旦复制被分配到另一个节点,这个指数的健康状况会变成绿色。
+
+###########################
+索引和查询文档： Index and Query a Document
+
+现在让我们把东西放到我们的客户指数。记得以前,为了索引文档,我们必须告诉Elasticsearch哪种类型的指数应该去。
+
+让我们索引一个简单的客户文档转换成客户指数,“外部”类型,ID 1如下:
+
+
+
+
+
+
+
+
+
+
+
+
+
