@@ -1,0 +1,66 @@
+Installation:
+Elasticsearch至少需要Java 7。特别是在撰写本文时,建议你使用Oracle 1.8.0_25 JDK版本。Java安装因平台不同而有所不同,所以我们不会进入这些细节。Oracle建议安装文档甲骨文的网站上可以找到。一句话,在你安装Elasticsearch之前,请先检查您的Java版本通过运行(如果需要相应地然后安装/升级):
+
+java -version
+echo $JAVA_HOME
+
+一旦我们建立了Java,我们可以下载并运行Elasticsearch。二进制文件可从www.elastic.co下载一并发布,已经过去。为每一个版本,你可以选择在一个zip或tar存档,或者DEB
+RPM包。为简单起见,我们使用tar文件。
+让我们下载Elasticsearch 2.1.0的焦油如下(Windows用户应该下载zip包):
+
+访问:www.elastic.co  下载想要格式的安装包
+RPM https://download.elasticsearch.org/elasticsearch/release/org/elasticsearch/distribution/rpm/elasticsearch/2.0.0/elasticsearch-2.0.0.rpm
+
+tar包：
+curl -L -O
+https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.1.0/elasticsearch-2.1.0.tar.gz
+
+然后提取如下(Windows用户应该解压zip包):
+
+tar -xvf elasticsearch-2.1.0.tar.gz
+
+然后,它将创建一个堆在你的当前目录的文件和文件夹。然后我们进入bin目录如下:
+
+cd elasticsearch-2.1.0/bin
+
+现在我们已经准备好开始我们的节点和单个集群(Windows用户应该运行elasticsearch。bat文件):
+
+./elasticsearch
+
+如果一切顺利,您应该看到一群看起来像下面的信息:
+
+./elasticsearch
+[2014-03-13 13:42:17,218][INFO ][node           ] [New Goblin] version[2.1.0],
+pid[2085], build[5c03844/2014-02-25T15:52:53Z]
+[2014-03-13 13:42:17,219][INFO ][node           ] [New Goblin] initializing
+...
+[2014-03-13 13:42:17,223][INFO ][plugins        ] [New Goblin] loaded [],
+sites []
+[2014-03-13 13:42:19,831][INFO ][node           ] [New Goblin] initialized
+[2014-03-13 13:42:19,832][INFO ][node           ] [New Goblin] starting ...
+[2014-03-13 13:42:19,958][INFO ][transport      ] [New Goblin] bound_address
+{inet[/0:0:0:0:0:0:0:0:9300]}, publish_address {inet[/192.168.8.112:9300]}
+[2014-03-13 13:42:23,030][INFO ][cluster.service] [New Goblin] new_master [New
+Goblin][rWMtGj3dQouz2r6ZFL9v4g][mwubuntu1][inet[/192.168.8.112:9300]], reason:
+zen-disco-join (elected_as_master)
+[2014-03-13 13:42:23,100][INFO ][discovery      ] [New Goblin]
+elasticsearch/rWMtGj3dQouz2r6ZFL9v4g
+[2014-03-13 13:42:23,125][INFO ][http           ] [New Goblin] bound_address
+{inet[/0:0:0:0:0:0:0:0:9200]}, publish_address {inet[/192.168.8.112:9200]}
+[2014-03-13 13:42:23,629][INFO ][gateway        ] [New Goblin] recovered [1]
+indices into cluster_state
+[2014-03-13 13:42:23,630][INFO ][node           ] [New Goblin] started
+
+没有太多的细节,我们可以看到节点命名为“新妖精”(这将是一个不同的惊奇的性格在你的情况中)已经开始和选举本身作为一个主在一个集群中。目前还不担心大师意味着什么。最主要的,重要的是我们已经开始一个节点在一个集群中。
+
+正如前面所提到的,我们可以覆盖或集群节点名。可以从命令行开始Elasticsearch如下:
+
+./elasticsearch --cluster.name my_cluster_name --node.name my_node_name
+
+还要注意线标记的http与http地址(192.168.8.112)和端口信息(9200),我们的节点是可获得的。默认情况下,Elasticsearch使用端口9200来提供访问REST
+API。这个端口是可配置的,如果必要的。
+
+
+
+
+

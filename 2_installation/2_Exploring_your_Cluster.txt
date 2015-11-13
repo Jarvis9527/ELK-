@@ -1,0 +1,34 @@
+Exploring Your Cluster:搜索您的集群
+
+Cluster Health：集群的健康
+
+让我们先从一个基本的健康检查,我们可以使用它来看到我们的集群是如何做的。我们将使用curl这样做但是你可以使用任何工具,可以使HTTP / REST调用。假设我们仍在同一节点开始Elasticsearch并打开另一个命令shell窗口。
+
+检查集群的健康,我们将使用_cat API。记得以前,我们的节点HTTP端点可以在端口9200上:
+
+curl 'localhost:9200/_cat/health?v'
+
+和响应：
+
+epoch      timestamp cluster       status node.total node.data shards pri relo init unassign
+1394735289 14:28:09  elasticsearch green           1         1      0   0    0    0        0
+
+我们可以看到,我们的集群命名“elasticsearch”是一个绿色的状态。
+
+每当我们问集群健康,我们要么得到绿色,黄色和红色。绿色意味着一切是好的(集群功能齐全),黄色意味着所有数据是可用的,但是一些副本尚未分配(集群功能齐全),和红色意味着一些数据不可用无论什么原因。注意,即使一个集群是红色的,它仍然是部分功能(即它将继续搜索请求从服务可用的碎片)但是你可能需要尽快修复它,因为你有缺失的数据。
+
+也从上面的反应,我们可以看到,共有1个节点,我们有0碎片,因为我们没有数据。注意,因为我们使用的是默认集群名称(elasticsearch)和由于elasticsearch使用单播网络发现默认情况下找到其他节点在同一台机器上,这是可能的,你可以不小心启动多个节点在你的电脑上,让他们加入一个集群。在这个场景中,您可能会看到超过1个节点在上面的反应。
+
+我们也可以得到我们的集群中的节点列表如下:
+
+curl 'localhost:9200/_cat/nodes?v'
+
+和响应：
+
+curl 'localhost:9200/_cat/nodes?v'
+host         ip        heap.percent ram.percent load node.role master name
+mwubuntu1    127.0.1.1            8           4 0.00 d         *      New Goblin
+
+在这里,我们可以看到一个名为“新妖精”的节点,这是单一节点当前在我们的集群。
+
+
